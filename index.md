@@ -53,6 +53,12 @@ For your first milestone, describe what your project is and how you plan to buil
 - Challenges you're facing and solving in your future milestones
 - What your plan is to complete your project
 
+# Starter Project: Calculator
+
+<iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+This starter project was a calculator, I soldered in a battery socket, usb socket, monolithic capacitor, processor socket, two digital tubes, and buttons in the circuit board. Then, I put caps on the buttons, a battery in the battery socket, and a processor in the processor socket. The buttons tell the proccessor what to calculate and the processor tells the digital tubes what to display.
+
 # Schematics 
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
 
