@@ -1,12 +1,6 @@
 # IoT Air Pollution Monitor
 An Air Pollution Monitor that uses the IoT service, Adafruit IO, in order to store air quality data. This monitor uses CircuitPython to track air quality, with the sensor.
 
-You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
-```HTML 
-<!--- This is an HTML comment in Markdown -->
-<!--- Anything between these symbols will not render on the published site -->
-```
-
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Isaac H. | BASIS Independent Silicon Valley | Electrical Engineering | Incoming Sophmore
