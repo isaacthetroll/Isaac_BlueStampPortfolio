@@ -49,7 +49,7 @@ For your first milestone, describe what your project is and how you plan to buil
 
 # Starter Project: Calculator
 
-<iframe width="560" height="315" src="[https://www.youtube.com/watch?v=WKYSBbCFJjI](https://youtu.be/WKYSBbCFJjI?si=FnSfNNspHPjVcwEB)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WKYSBbCFJjI?si=0b5Gh7OPD_JUhecl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 This starter project was a calculator, I soldered in a battery socket, usb socket, monolithic capacitor, processor socket, two digital tubes, and buttons in the circuit board. Then, I put caps on the buttons, a battery in the battery socket, and a processor in the processor socket. The buttons tell the proccessor what to calculate and the processor tells the digital tubes what to display.
 
