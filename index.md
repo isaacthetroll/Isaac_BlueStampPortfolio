@@ -51,7 +51,7 @@ For your first milestone, describe what your project is and how you plan to buil
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WKYSBbCFJjI?si=-xpv9teLWwa9nqml" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-This starter project was a calculator, I soldered in a battery socket, usb socket, monolithic capacitor, processor socket, two digital tubes, and buttons in the circuit board. Then, I put caps on the buttons, a battery in the battery socket, and a processor in the processor socket. The buttons tell the proccessor what to calculate and the processor tells the digital tubes what to display.
+This starter project was a calculator, I soldered in a battery socket, usb socket, monolithic capacitor, processor socket, two digital tubes, and buttons in the circuit board. Then, I put caps on the buttons, a battery in the battery socket, and a processor in the processor socket. The only problem I encountered during this project was fitting the processor as the pins were too wide to fit in the socket. However, I just bent all the pins a little until the processor fit in the socket. The buttons tell the proccessor what to calculate and the processor tells the digital tubes what to display.
 
 <!-- # Schematics 
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
