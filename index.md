@@ -5,7 +5,7 @@ An Air Pollution Monitor that uses the API, Adafruit IO, in order to store air q
 |:--:|:--:|:--:|:--:|
 | Isaac H. | BASIS Independent Silicon Valley | Electrical Engineering | Incoming Sophmore
 
-![image](Isaac.HEIC)
+![Headshot](Isaac.png)
   
 <!-- # Final Milestone
 
