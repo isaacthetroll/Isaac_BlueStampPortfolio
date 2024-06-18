@@ -5,11 +5,9 @@ An Air Pollution Monitor that uses the API, Adafruit IO, in order to store air q
 |:--:|:--:|:--:|:--:|
 | Isaac H. | BASIS Independent Silicon Valley | Electrical Engineering | Incoming Sophmore
 
-<!-- **Replace the BlueStamp logo below with an image of yourself and your completed project. Follow the guide [here](https://tomcam.github.io/least-github-pages/adding-images-github-pages-site.html) if you need help.**
-
-![Headstone Image](logo.svg)
+![Headstone Image](Isaac.HEIC)
   
-# Final Milestone
+<!-- # Final Milestone
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
@@ -49,9 +47,16 @@ For your first milestone, describe what your project is and how you plan to buil
 
 # Starter Project: Calculator
 
-This starter project was a calculator, I soldered in a battery socket, usb socket, monolithic capacitor, processor socket, two digital tubes, and buttons in the circuit board. Then, I put caps on the buttons, a battery in the battery socket, and a processor in the processor socket. The only problem I encountered during this project was fitting the processor as the pins were too wide to fit in the socket. However, I just bent all the pins a little until the processor fit in the socket. The buttons tell the proccessor what to calculate and the processor tells the digital tubes what to display.
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WKYSBbCFJjI?si=-xpv9teLWwa9nqml" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Summary
+This starter project was a calculator, it contains a battery and uses two four digit digital tube display. All the math is done by the controller and the buttons input numbers into the controller. I chose this because I wanted to learn how calculators work, and because it is an everyday item.
+
+## Challenges
+Overall, this starter project did not have many challenges, but because some of the steps were done in the wrong order, the controller socket was misaligned. I had to bend the pins of the controller in order to fit it in because the socket was misaligned.
+
+## What's Next
+My next project will be the IoT Air Quality Monitor, it uses a BME280 and PM2.5 Sensor to track air quality and things related to air quality. The device uses a AirLift FeatherWing WiFi Co-Processor to connect to the WiFi and the Adafruit Feather M4 Express to process the data.
 
 <!-- # Schematics 
 Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
