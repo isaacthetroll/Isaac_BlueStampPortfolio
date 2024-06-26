@@ -18,7 +18,13 @@ An Air Pollution Monitor that uses the API, Adafruit IO, in order to store air q
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0_yikpJzIDs?si=x4FFdHIlrD__UCiN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Summary
-The device now uses all its sensors to collect data about the air and it is capable of sending this data to Adafruit IO. This milestone was difficult to reach, because the libraries were full of errors. The Adafruit Feather M4 Express used the same pin for reset and for communicating with the FeatherWing AirLift. Because of this, the libraries had to be altered to accomidate for this change, because they set the reset pin to the same one as the one for communication. Overall, I've learned a few things, including the fact that all the guide for this project was faulty and that whoever coded the libraries did not know the hardware's capabilities.
+The device now uses all its sensors to collect data about the air and it is capable of sending this data to Adafruit IO. It collects data from the air every 10 minutes and sends it to the Adafruit website.
+
+## Challenges
+Reaching this goal was somewhat difficult, the code I had for the device used the same pin for reset and communcation between the Feather M4 Express and the FeatherWing AirLift. For some reason, all the libraries also used had this same issue, so I had to alter the libraries to fix this issue. I also had to solder the reset pin to somewhere else. But after that was done, all the problems where fixed.
+
+## Next Steps
+The next thing I'll be doing is altering the code so the device collects data about the air every minute and takes the average of those data points and sends it to the Adafruit website.
 
 # Second Milestone
 
