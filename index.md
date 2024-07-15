@@ -6,6 +6,17 @@ An Air Pollution Monitor that uses the API, Adafruit IO, in order to store air q
 | Isaac H. | BASIS Independent Silicon Valley | Electrical Engineering | Incoming Sophmore
 
 ![Headshot](Isaac1.png)
+
+# Modifications
+
+## Summary
+The device's code is now altered to take the average of 5 measurements over the course of 5 minutes. The device now has a 3d printed enclosure, and has a CO2 sensor. The BME280 sensor can also measure air pressure, so I have altered the code to be able to measure air pressure and carbon dioxide concentration.
+
+## Challenges
+Originally, I also planned to add a notification system that uses email to notify the user about any abnormal measurements. However, when I tried to import the smtplib library for email, the memory ran out so I decided to use sms messaging instead. I found a few sms apis, but I quickly learned that I could not use any of them because I had to use pip in order get the libraries required for the api due to the fact that I was using circuitpython instead of python. I scrapped the notification idea, and I ended up adding a sensor instead.
+
+## Possible Future Additions
+If there was something I would add in the future, I would definitely be a battery. I had the idea for a long time now, but I just forgot about it and just decided to work on other things. Adding a battery would also require me to create a new enclosure for the project, and I might use a different method to create the enclosure.
   
 # Final Milestone
 
