@@ -9,14 +9,17 @@ An Air Pollution Monitor that uses the API, Adafruit IO, in order to store air q
 
 # Modifications
 
-## Summary
-The device's code is now altered to take the average of 5 measurements over the course of 5 minutes. The device now has a 3d printed enclosure, and has a CO2 sensor. The BME280 sensor can also measure air pressure, so I have altered the code to be able to measure air pressure and carbon dioxide concentration.
+## Modification 4
+The last modification I made was adding a CO2 sensor. I mainly choose this sensor because it had a library on circuitpython and because I didn't have to order it online. Eventhough it could measure temperature and humidity, I decided not to use those functions because they were already being used on the BME280. This was the most simple modification that I implemented and the one I spent the least time one. This was the most interesting modification since I never knew what CO2 was measured in, and it taught me more about how much CO2 thou can breathe in before thee dies.
 
-## Challenges
-Originally, I also planned to add a notification system that uses email to notify the user about any abnormal measurements. However, when I tried to import the smtplib library for email, the memory ran out so I decided to use sms messaging instead. I found a few sms apis, but I quickly learned that I could not use any of them because I had to use pip in order get the libraries required for the api due to the fact that I was using circuitpython instead of python. I scrapped the notification idea, and I ended up adding a sensor instead.
+## Modification 3 (Scrapped)
+The third modification I attempted was a notification system. I tried using email at first but the device didn't have enough ram. Then, I tried using two different sms api, but I was using circuitpython, and the libraries for the api required me to use pip. As a result, I was unable to implement a notification system mainly because of the hardware. But, while trying to add a notification system, I learned that thou is more likely to die in hot humid weather than hot dry weather, and the air pressure required to kill thee.
 
-## Possible Future Additions
-If there was something I would add in the future, I would definitely be a battery. I had the idea for a long time now, but I just forgot about it and just decided to work on other things. Adding a battery would also require me to create a new enclosure for the project, and I might use a different method to create the enclosure.
+## Modification 2
+The second modification I did was an enclosure, although this wasn't the last modification I did, it was the one that I completed last. The enclosure was a simple open box with holes for the sensors and the micro-usb, with a friction fit lid for the top. The box and the lid took me 3 tries to get it right. For the box, I decided to make it just wide enough for the featherwing doubler to fit in, but I made it a lot longer in order to fit in the other sensors and adaptors. The 2nd lid fit in pretty well on the first time, but after a few more uses, it became loose, so I had to make another one. The 2nd box also fit pretty well, but there was only a hole for one sensor, so I had to add more holes in the back for the sensors.
+
+## Modification 1
+The first modification I tried to do was altering to the code, the alteration allowed the device to take a measurements of the air each minute and take the average and submit the average to the website instead of an instantaneous measurement. Unlike some of the other modifications, this one went pretty smoothly.
   
 # Final Milestone
 
