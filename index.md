@@ -97,12 +97,38 @@ import gc
 import adafruit_pm25
 import adafruit_bme280
 from adafruit_bme280 import basic as adafruit_bme280
+import adafruit_scd4x
 #from adafruit_bme280 import Adafruit_BME280_I2C
 
 print("xasdasd")
 
+def mean(x):
+    average = 0.0
+    for i in range(len(x)):
+        average += x[i]
+    average /= len(x)
+    return average
 
 # Sensor Functions
+def get_aqi_category(aqi_data):
+    aqi_cat = "N/A"
+    aqi_average = mean(aqi_data)
+    if 0.0 <= aqi_average <= 12.0:
+        aqi_cat = "Good"
+    elif 12.1 <= aqi_average <= 35.4:
+        aqi_cat = "Moderate"
+    elif 35.5 <= aqi_average <= 55.4:
+        aqi_cat = "Unhealthy for Sensitive Groups"
+    elif 55.5 <= aqi_average <= 150.4:
+        aqi_cat = "Unhealthy"
+    elif 150.5 <= aqi_average <= 250.4:
+        aqi_cat = "Very Unhealthy"
+    elif 250.5 <= aqi_average <= 350.4:
+        aqi_cat = "Hazardous"
+    elif 350.5 <= aqi_average <= 500.4:
+        aqi_cat = "Hazardous"
+    return aqi_cat
+
 def calculate_aqi(pm_sensor_reading):
     """Returns a calculated air quality index (AQI)
     and category as a tuple.
@@ -117,30 +143,22 @@ def calculate_aqi(pm_sensor_reading):
         if 0.0 <= pm_sensor_reading <= 12.0:
             # AQI calculation using EPA breakpoints (Ilow-IHigh)
             aqi_val = map_range(int(pm_sensor_reading), 0, 12, 0, 50)
-            aqi_cat = "Good"
         elif 12.1 <= pm_sensor_reading <= 35.4:
             aqi_val = map_range(int(pm_sensor_reading), 12, 35, 51, 100)
-            aqi_cat = "Moderate"
         elif 35.5 <= pm_sensor_reading <= 55.4:
             aqi_val = map_range(int(pm_sensor_reading), 36, 55, 101, 150)
-            aqi_cat = "Unhealthy for Sensitive Groups"
         elif 55.5 <= pm_sensor_reading <= 150.4:
             aqi_val = map_range(int(pm_sensor_reading), 56, 150, 151, 200)
-            aqi_cat = "Unhealthy"
         elif 150.5 <= pm_sensor_reading <= 250.4:
             aqi_val = map_range(int(pm_sensor_reading), 151, 250, 201, 300)
-            aqi_cat = "Very Unhealthy"
         elif 250.5 <= pm_sensor_reading <= 350.4:
             aqi_val = map_range(int(pm_sensor_reading), 251, 350, 301, 400)
-            aqi_cat = "Hazardous"
         elif 350.5 <= pm_sensor_reading <= 500.4:
             aqi_val = map_range(int(pm_sensor_reading), 351, 500, 401, 500)
-            aqi_cat = "Hazardous"
         else:
             print("Invalid PM2.5 concentration")
             aqi_val = -1
-            aqi_cat = None
-        return aqi_val, aqi_cat
+        return aqi_val
     except (ValueError, RuntimeError, ConnectionError, OSError) as e:
             print("Unable to read from sensor, retrying...")
             supervisor.reload()
@@ -200,9 +218,26 @@ def read_bme(is_celsius=False):
     try:
         humid = bme280.humidity
         temp = bme280.temperature
+        pressure = bme280.pressure
         if not is_celsius:
             temp = temp * 1.8 + 32
-        return temp, humid
+        return temp, humid, pressure
+    except (ValueError, RuntimeError, ConnectionError, OSError) as e:
+        print("Failed to fetch time, retrying\n", e)
+        supervisor.reload()
+
+def read_scd41():
+    co2 = None
+    scd4x.start_periodic_measurement()
+    try:
+        while co2 == None:
+            if scd4x.data_ready:
+                co2 = scd4x.CO2
+                scd4x.stop_periodic_measurement()
+                return co2
+            else:
+                time.sleep(1)
+        return co2
     except (ValueError, RuntimeError, ConnectionError, OSError) as e:
         print("Failed to fetch time, retrying\n", e)
         supervisor.reload()
@@ -219,7 +254,7 @@ gc.enable()
 # Return environmental sensor readings in degrees Celsius
 USE_CELSIUS = False
 # Interval the sensor publishes to Adafruit IO, in minutes
-PUBLISH_INTERVAL = 10
+PUBLISH_INTERVAL = 5
 
 ### WiFi ###
 # Get wifi details and more from a secrets.py file
@@ -262,6 +297,7 @@ i2c = board.I2C()
 
 # Connect to a BME280 over I2C
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x77)
+scd4x = adafruit_scd4x.SCD4X(i2c, address=0x62)
 # Uncomment below for PMSA003I Air Quality Breakout
 #pm25 = PM25_I2C(i2c, reset_pin)
 
@@ -278,6 +314,9 @@ feed_aqi = io.get_feed("air-quality-sensor.aqi")
 feed_aqi_category = io.get_feed("air-quality-sensor.category")
 feed_humidity = io.get_feed("air-quality-sensor.humidity")
 feed_temperature = io.get_feed("air-quality-sensor.temperature")
+feed_pressure = io.get_feed("air-quality-sensor.pressure")
+feed_co2 = io.get_feed("air-quality-sensor.carbon-dioxide")
+
 
 # Set up location metadata from secrets.py file
 location_metadata = {
@@ -289,7 +328,12 @@ location_metadata = {
 elapsed_minutes = 0
 prv_mins = 0
 
-
+aqi = list()
+aqi_data = list()
+temperature = list()
+humidity = list()
+pressure = list()
+co2 = list()
 
 while True:
     try:
@@ -307,26 +351,53 @@ while True:
         if cur_time.tm_min >= prv_mins:
             print("%d min elapsed.." % elapsed_minutes)
             prv_mins = cur_time.tm_min
+            print("Sampling AQI...")
+            aqi_data.append(sample_aq_sensor())
+            aqi.append(calculate_aqi(aqi_data[elapsed_minutes]))
+            print("Sampling environmental sensor...")
+            temperature_temp, humidity_temp, pressure_temp= read_bme(USE_CELSIUS)
+            co2_temp = read_scd41()
+            temperature.append(temperature_temp)
+            humidity.append(humidity_temp)
+            pressure.append(pressure_temp)
+            co2.append(co2_temp)
+            print("AQI: " + str(aqi_data[elapsed_minutes]))
+            print("Temperature: " + str(temperature[elapsed_minutes]) + " degrees Fahrenheit")
+            print("Humidity " + str(humidity[elapsed_minutes]) + "%")
+            print("Pressure: " + str(pressure[elapsed_minutes]) + " hPa")
+            print("CO2: " + str(co2[elapsed_minutes]) + " ppm")
             elapsed_minutes += 1
     except (ValueError, RuntimeError, ConnectionError, OSError) as e:
         print("Failed to fetch time, retrying\n", e)
         supervisor.reload()
     try:
         if elapsed_minutes >= PUBLISH_INTERVAL:
-            print("Sampling AQI...")
-            aqi_reading = sample_aq_sensor()
-            aqi, aqi_category = calculate_aqi(aqi_reading)
+            print("aqi: " + str(aqi))
+            print("aqi raw:" + str(aqi_data))
+            print("temp:" + str(temperature))
+            print("humidity:" + str(humidity))
+            print("pressure:"+ str(pressure))
+            print("co2: " + str(co2))
+            aqi_category = get_aqi_category(aqi_data)
             # aqdata = pm25.read()
             # sampleaqi = aqdata["pm25 env"]
             # aqi, aqi_category = calculate_aqi(sampleaqi)
+
+            aqi = mean(aqi)
+            temperature = mean(temperature)
+            humidity = mean(humidity)
+            pressure = mean(pressure)
+            co2 = mean(co2)
+
             print("AQI: %d" % aqi)
             print("Category: %s" % aqi_category)
 
             # temp and humidity
-            print("Sampling environmental sensor...")
-            temperature, humidity = read_bme(USE_CELSIUS)
             print("Temperature: %0.1f F" % temperature)
             print("Humidity: %0.1f %%" % humidity)
+            print("Pressure: %0.1f hPa" % pressure)
+            print("CO2: %0.1f ppm" % co2)
+
 
             # Publish all values to Adafruit IO
             print("Publishing to Adafruit IO...")
@@ -334,8 +405,19 @@ while True:
             io.send_data(feed_aqi_category["key"], aqi_category)
             io.send_data(feed_temperature["key"], str(temperature))
             io.send_data(feed_humidity["key"], str(humidity))
+            io.send_data(feed_pressure["key"], str(pressure))
+            io.send_data(feed_co2["key"], str(co2))
+
             print("Published!")
+
             elapsed_minutes = 0
+            aqi = list()
+            aqi_data = list()
+            temperature = list()
+            humidity = list()
+            pressure = list()
+            co2 = list()
+            
     except (ValueError, RuntimeError, ConnectionError, OSError) as e:
         print("Failed to send data to IO, retrying\n", e)
         supervisor.reload()
