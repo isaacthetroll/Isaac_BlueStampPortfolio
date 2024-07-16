@@ -442,6 +442,7 @@ Don't forget to place the link of where to buy each component inside the quotati
 | Silicone Cover Stranded-Core Ribbon Cable - 4 Wires 1 Meter Long - 30 AWG Black | Cables that are used to connect devices together | $1.95 | <a href="https://www.adafruit.com/product/3889"> Link </a> |
 | 5V 2A Switching Power Supply w/ USB-A Connector | Used along with the USB-A/Micro Cable to charge the device | Varies | N/A |
 | USB A/Micro Cable | Used along with the USB-A/Micro Cable to charge the device | Varies | N/A |
+| SCD41 Gas Sensor Module CO2 Carbon Dioxide Temperature and Humidity Gas Sensor Module I2C | Measures CO2 concentration | $28.99 | <a href="https://www.amazon.com/Teyleten-Robot-Dioxide-Temperature-Humidity/dp/B0C622SS34"> Link </a> |
 
 <!-- # Other Resources/Examples
 One of the best parts about Github is that you can view how other people set up their own work. Here are some past BSE portfolios that are awesome examples. You can view how they set up their portfolio, and you can view their index.md files to understand how they implemented different portfolio components.
